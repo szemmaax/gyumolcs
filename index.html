@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gyümölcsnapló 🍓</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fff8f0;
+            text-align: center;
+            color: #333;
+        }
+
+        header {
+            background: #ff8fab;
+            color: white;
+            padding: 25px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .total {
+            margin: 25px auto;
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .total-number {
+            font-size: 40px;
+            font-weight: bold;
+            color: #ff6f91;
+        }
+
+        .fruits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .fruit {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: 0.2s;
+        }
+
+        .fruit:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        .fruit img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+
+        .fruit-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .count {
+            color: #ff6f91;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        button {
+            background: #ff6f91;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+
+        button:hover {
+            background: #ff527b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🍓 Gyümölcsnapló 🍎</h1>
+        <p>Kattints arra a gyümölcsre, amit megettél!</p>
+    </header>
+
+    <div class="total">
+        <h2>Mai gyümölcsfogyasztás</h2>
+
+        <div class="total-number">
+            <span id="total">0</span> adag
+        </div>
+
+        <p>gyümölcsöt fogyasztottál ma 🍇</p>
+    </div>
+
+    <div class="fruits">
+
+        <div class="fruit" onclick="addFruit('alma')">
+            <img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=300" alt="Alma">
+            <div class="fruit-name">🍎 Alma</div>
+            <div class="count">0 adag</div>
+        </div>
+
+        <div class="fruit" onclick="addFruit('banan')">
+            <img src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=300" alt="Banán">
+            <div class="fruit-name">🍌 Banán</div>
+            <div class="count">0 adag</div>
+        </div>
+
+        <div class="fruit" onclick="addFruit('eper')">
+            <img src="https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=300" alt="Eper">
+            <div class="fruit-name">🍓 Eper</div>
+            <div class="count">0 adag</div>
+        </div>
+
+        <div class="fruit" onclick="addFruit('narancs')">
+            <img src="https://images.unsplash.com/photo-1547514701-42782101795e?w=300" alt="Narancs">
+            <div class="fruit-name">🍊 Narancs</div>
+            <div class="count">0 adag</div>
+        </div>
+
+        <div class="fruit" onclick="addFruit('szolo')">
+            <img src="https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=300" alt="Szőlő">
+            <div class="fruit-name">🍇 Szőlő</div>
+            <div class="count">0 adag</div>
+        </div>
+
+        <div class="fruit" onclick="addFruit('dinnye')">
+            <img src="https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=300" alt="Dinnye">
+            <div class="fruit-name">🍉 Dinnye</div>
+            <div class="count">0 adag</div>
+        </div>
+
+    </div>
+
+    <button onclick="resetDay()">🔄 Nap újraindítása</button>
+
+
+    <script>
+
+        let fruits = {
+            alma: 0,
+            banan: 0,
+            eper: 0,
+            narancs: 0,
+            szolo: 0,
+            dinnye: 0
+        };
+
+        function addFruit(fruit) {
+
+            fruits[fruit]++;
+
+            updatePage();
+        }
+
+        function updatePage() {
+
+            let total = 0;
+
+            Object.values(fruits).forEach(function(number) {
+                total += number;
+            });
+
+            document.getElementById("total").textContent = total;
+
+            let cards = document.querySelectorAll(".fruit");
+
+            cards.forEach(function(card, index) {
+
+                let fruitNames = [
+                    "alma",
+                    "banan",
+                    "eper",
+                    "narancs",
+                    "szolo",
+                    "dinnye"
+                ];
+
+                card.querySelector(".count").textContent =
+                    fruits[fruitNames[index]] + " adag";
+            });
+        }
+
+        function resetDay() {
+
+            fruits = {
+                alma: 0,
+                banan: 0,
+                eper: 0,
+                narancs: 0,
+                szolo: 0,
+                dinnye: 0
+            };
+
+            updatePage();
+        }
+
+    </script>
+
+</body>
+</html>
+
